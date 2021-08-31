@@ -107,16 +107,20 @@ bool deleteList (LinkList &L, int i, int &e) {
 }
 
 // 删除指定结点 o(1)
+// 思路： 删除实际上我们要删除的是数据 存放数据的容器（地址）改变是允许的
+// bug：删除最后一个结点时 p->next 为 NULL 该处为空指针，只能采用遍历查找p的前驱进行删除 o（n）
 bool deleteNode (LNode *p) {
     if (p == NULL) {
         return false;
     }
     LNode *q = p->next;
-    p->data = p->next->data; // 思路： 删除实际上我们要删除的是数据 存放数据的容器（地址）改变是允许的
+    p->data = p->next->data; // bug： 删除最后一个结点时 p->next 为 NULL 该处为空指针
     p->next = q->next; // 未赋值前 q->next 是等于  p->next->next
     free(q);
     return true;
 }
+
+// 单链表的局限性： 无法逆向检索 不方便去找前驱结点 -> 用双链表可以解决这个局限性
 
 int main () {
     LinkList L;
