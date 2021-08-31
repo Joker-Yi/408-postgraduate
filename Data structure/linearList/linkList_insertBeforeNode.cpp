@@ -5,7 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 带头结点的单链表 按位序插入 指定结点的后插操作
+// 带头结点的单链表 按位序插入 指定结点的前插操作
+
+// 单链表查找某结点的前一个结点比较麻烦 需要遍历
+// 思路：单链表的结点只知道它的后一个结点，可以让数据域移位实现
+// 即申请一个新的结点，把指定结点的数据放在新结点，再把要加入的新元素（数据）放在原来的指定结点，两结点相连即可实现
 
 typedef struct LNode {  // 定义单链表结点类型
     int data;           // 结点的数据域
@@ -28,7 +32,7 @@ bool empty (LinkList L) {
     return (L->next == NULL); // 头结点指针域 为NULL则为空表
 }
 
-// 后插操作  在p结点之后插入e元素
+// 后插操作  在p结点之后插入元素e
 bool insertNextNode (LNode *p, int e) {
     if (p == NULL) { // i值不合法 未找到i-1个结点
         return false;
@@ -58,6 +62,19 @@ bool insertList (LinkList &L, int i, int e) {
     }
     // 调用后插操作代码 跟之前的插入相同
     return insertNextNode(p, e);
+}
+
+// 前插操作 在p结点之前插入结点s  时间复杂度o（1）
+bool insertBeforeNode (LNode *p, LNode *s) {
+    if (p == NULL || s == NULL)
+        return false;
+    s->next = p->next;
+    p->next = s; // p的next指针指向新插入结点s
+    // 交换这两结点的数据
+    int temp = p->data;
+    p->data = s->data;
+    s->data = temp;
+    return true;
 }
 
 int main () {
