@@ -149,12 +149,24 @@ bool deleteNode (LNode *p) {
 
 // 单链表的局限性： 无法逆向检索 不方便去找前驱结点 -> 用双链表可以解决这个局限性
 
+int getLength (LinkList L) {
+    int len = 0;
+    LNode *p = L;
+    while (p->next != NULL) {
+        p = p->next;
+        len++;
+    }
+    return len;
+}
+
 int main () {
     LinkList L;
     initList(L);
     int deleteElem = NULL;
     printf("插入成功? %d\n", insertList(L, 1, 321)); // 成功
+    printf("插入成功? %d\n", insertList(L, 1, 31)); // 成功
     printf("查找第1个结点 %d\n", getElem(L, 1)->data);
     printf("查找值为321的结点 %d\n", locateElem(L, 321));
+    printf("链表长度为 %d\n", getLength(L));
     return 0;
 }
