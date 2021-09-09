@@ -41,7 +41,7 @@ bool pop (LinkStack &S, int &e) {
 // 获取栈顶元素
 int getTopElem (LinkStack S) {
     if (S == NULL) {
-        return -1;
+        return -1; // 空栈返回-1
     }
     return S->data;
 }
